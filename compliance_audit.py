@@ -10,7 +10,7 @@ publishing_loads = pd.read_csv(
 
 
 # Audit #1: Missing Clauses
-# How many required clauses were not loaded into policy documents
+# BQ: How many required clauses were not loaded into policy documents
 
 missing_clauses = expected_clauses.merge(
     publishing_loads[["Policy_ID", "Clause_ID"]], # only brings in those two columns
@@ -44,7 +44,7 @@ duplicate_clauses = (
         ["Policy_ID", "Clause_ID"]
     )
     .size()
-    .reset_index(name="Count") # converts the result back into a normal DataFrame, naming the count column "Count"
+    .reset_index(name="Count") # converts the size() result back into a normal DataFrame, naming the count column "Count"
 )
 
 duplicate_clauses = duplicate_clauses[
