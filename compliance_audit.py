@@ -65,10 +65,22 @@ print("Duplicate Clauses Saved")
 
 # Audit #3: Version Mismatch
 
-version_mismatches = publishing_loads[
-    publishing_loads["Loaded_Version"]
+version_check = publishing_loads.merge(
+    expected_clauses[
+        [
+            "Policy_ID",
+            "Clause_ID",
+            "Required_Clause_Version"
+        ]
+    ],
+    on=["Policy_ID", "Clause_ID"],
+    how="left"
+)
+
+version_mismatches = version_check[
+    version_check["Loaded_Version"]
     !=
-    publishing_loads["Required_Clause_Version"]
+    version_check["Required_Clause_Version"]
 ]
 
 print(version_mismatches.shape)
